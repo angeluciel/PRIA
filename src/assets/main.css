@@ -7,3 +7,13 @@
   --font-quicksand: 'Quicksand', 'sans-serif';
   --font-raleway: 'Raleway', 'sans-serif';
 }
+
+@layer components {
+  .separator {
+    @apply before:content-[''] after:content-[''] before:flex-1 after:flex-1 before:h-[2px] after:h-[2px] before:bg-gray-500 after:bg-gray-500 before:mx-5 after:mx-5;
+  }
+
+  .login-btn {
+    @apply font-nunito font-semibold h-12 bg-cyan-300 text-zinc-900 rounded-lg p-3 gap-6 flex justify-center items-center hover:bg-cyan-400 transition-all duration-300 cursor-pointer hover:scale-[101%] active:scale-95;
+  }
+}
