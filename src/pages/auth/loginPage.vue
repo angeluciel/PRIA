@@ -7,25 +7,30 @@
       class="flex flex-col bg-zinc-950/90 opacity-85 rounded-lg p-14 gap-4 justify-center items-center w-[600px]"
     >
       <!--logo-->
-      <div
-        class="flex gap-1 justify-center items-center font-nunito font-bold tracking-[0.2em] text-[2rem]"
-      >
-        <span class="text-white font-raleway">PRI</span>
-        <img src="/images/Subtract.svg" alt="din_logo" />
-      </div>
+      <priaLogo />
 
       <!--forms-->
       <div class="flex flex-col gap-8 w-full">
         <!--entraID-->
-        <div class="flex flex-col w-full">
+        <div class="flex flex-col w-full items-center">
           <button
             type="button"
-            class="login-btn border-2 border-cyan-300 hover:bg-cyan-300/20 overflow-hidden"
+            class="login-btn border-2 border-cyan-300 overflow-hidden"
+            :class="{ 'w-full': !isClicked }"
             :disabled="submitting"
+            ref="buttonEl"
+            @mouseenter="azureME"
+            @mouseleave="azureML"
+            @click="azureClick"
           >
-            <span class="flex items-center transition-transform ease-in duration-300 gap-2">
-              <img src="/images/azure.png" class="h-7 rounded-lg" alt="entra_logo" />
-              <span class="font-nunito font-semibold text-cyan-300">Entrar com Azure</span>
+            <span class="flex items-center transition-transform gap-2 relative">
+              <img
+                class="h-7 opacity-0 absolute -left-[40px]"
+                ref="logoEl"
+                src="/images/azure.png"
+                alt="sla"
+              />
+              <span class="text-white" ref="btnTextEl">Entrar com Azure</span>
             </span>
           </button>
         </div>
@@ -62,14 +67,72 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, onMounted } from 'vue'
+import { gsap } from 'gsap'
+import { useRouter } from 'vue-router'
+import priaLogo from '@/components/priaLogo.vue'
 
+const router = useRouter()
 const submitting = ref(false)
+const isClicked = ref(false)
+
+const buttonEl = ref<HTMLButtonElement | null>(null)
+const logoEl = ref<HTMLImageElement | null>(null)
+const btnTextEl = ref<HTMLSpanElement | null>(null)
+
+let hoverTl: gsap.core.Timeline
+let clickTl: gsap.core.Timeline
+
+onMounted(() => {
+  if (!buttonEl.value || !logoEl.value || !btnTextEl.value) return
+
+  gsap.set(logoEl.value, { opacity: 0, x: -40, scale: 0.8 })
+  gsap.defaults({ overwrite: 'auto' })
+
+  hoverTl = gsap
+    .timeline({ paused: true })
+    .to(btnTextEl.value, { x: 15, duration: 0.3, ease: 'power2.out' }, 0)
+    .to(logoEl.value, { opacity: 1, x: 12, scale: 1, duration: 0.4, ease: 'back.out(1.7)' }, 0.1)
+
+  clickTl = gsap
+    .timeline({
+      paused: true,
+      onComplete: () => {
+        router.push('/dashboard')
+      },
+    })
+    .to(btnTextEl.value, { opacity: 0, duration: 0.3, ease: 'power2.in' }, 0)
+    .to(logoEl.value, { x: 0, scale: 1.2, duration: 0.3, ease: 'back.out' }, 0)
+    .to(
+      buttonEl.value,
+      { width: '48px', borderRadius: '50%', duration: 0.6, ease: 'back.out(1.4)' },
+      0.4,
+    )
+    .to(logoEl.value, { scale: 1, x: 51, duration: 0.3, ease: 'back.out(1.4)' }, 0.6)
+    .to(logoEl.value, { rotation: 3650, duration: 0.6, ease: 'back.out' }, 0.8)
+})
 
 function loginUser() {
   console.info('login being implemented')
 }
 
+const azureME = () => {
+  if (!isClicked.value) hoverTl.timeScale(1).play()
+}
+const azureML = () => {
+  if (!isClicked.value) hoverTl.timeScale(1.4).reverse()
+} // fixed casing
+const azureClick = () => {
+  if (!isClicked.value && buttonEl.value) {
+    const w = buttonEl.value.offsetWidth
+    gsap.set(buttonEl.value, { width: w })
+
+    isClicked.value = true
+    clickTl.play()
+  }
+}
+
+/*
 const loginWithEntraID = async () => {
   submitting.value = true
   error.value = ''
@@ -94,6 +157,7 @@ const loginWithEntraID = async () => {
     submitting.value = false
   }
 }
+*/
 </script>
 
 <style scoped></style>

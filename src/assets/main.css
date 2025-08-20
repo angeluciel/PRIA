@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import 'tailwindcss';
 
@@ -6,6 +6,7 @@
   --font-nunito: 'Nunito', 'sans-serif';
   --font-quicksand: 'Quicksand', 'sans-serif';
   --font-raleway: 'Raleway', 'sans-serif';
+  --font-gabarito: 'Gabarito', 'sans-serif';
 
   --height-default: 48px;
 }
@@ -16,6 +17,6 @@
   }
 
   .login-btn {
-    @apply font-nunito font-bold tracking-wide h-default rounded-sm p-3 gap-6 flex justify-center items-center transition-all duration-300 cursor-pointer hover:scale-[101%] active:scale-95;
+    @apply font-nunito font-bold tracking-wide h-default rounded-sm p-3 gap-6 flex justify-center items-center transition-all duration-300 cursor-pointer;
   }
 }
