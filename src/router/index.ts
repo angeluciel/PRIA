@@ -11,8 +11,18 @@ const router = createRouter({
     },
     {
       path: '/dashboard',
-      name: 'dashboardteste',
-      component: () => import('@/pages/clients/dashboardView.vue'),
+      component: () => import('@/layouts/dashboardView.vue'),
+      children: [
+        {
+          path: '',
+          redirect: { name: 'backupDashboard' },
+        },
+        {
+          path: 'backup',
+          name: 'backupDashboard',
+          component: () => import('@/pages/dashboards/backupDashboard.vue'),
+        },
+      ]
     },
   ],
 })

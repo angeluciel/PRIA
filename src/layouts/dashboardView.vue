@@ -9,8 +9,8 @@
       <header>
         <baseHeader :Success="8" :Warning="3" :ErrorN="1" />
       </header>
-      <main>
-        <baseAccordion />
+      <main class="">
+        <router-view />
       </main>
     </div>
   </div>
@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import baseSidebar from '@/components/base/baseSidebar.vue'
 import baseHeader from '@/components/base/baseHeader.vue'
-import baseAccordion from '@/components/base/backup/baseAccordion.vue'
 </script>
 
 <style scoped></style>

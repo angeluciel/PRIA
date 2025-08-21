@@ -1,32 +1,33 @@
 <template>
-  <div class="space-y-4 p-4">
+  <div class="flex flex-wrap w-full">
+  <div class="space-y-4 p-4  font-gabarito">
     <!-- Company Section -->
     <div
       v-for="company in companies"
       :key="company.id"
-      class="border border-green-200 rounded-lg bg-green-50"
+      class="border border-emerald-500 rounded-lg w-[40rem] bg-emerald-100"
     >
       <!-- Company Header -->
       <div
         class="flex items-center justify-between p-4 cursor-pointer"
         @click="toggleCompany(company.id)"
       >
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-8">
           <!-- Collapse/Expand Arrow -->
           <ChevronDown
             :class="[
-              'w-4 h-4 transition-transform text-green-600',
+              'w-4 h-4 transition-transform text-emerald-900',
               company.expanded ? 'rotate-0' : '-rotate-90',
             ]"
           />
           <!-- Company Status Icon -->
-          <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-            <Check class="w-4 h-4 text-white" />
+          <div class="w-6 h-6 text-emerald-500 rounded-full flex items-center justify-center">
+            <CircleCheckBig />
           </div>
           <!-- Company Info -->
           <div>
-            <h3 class="font-semibold text-gray-800">{{ company.name }}</h3>
-            <p class="text-sm text-gray-500">
+            <h3 class="font-semibold text-zinc-900">{{ company.name }}</h3>
+            <p class="text-sm text-zinc-400">
               {{ company.description }} • {{ company.jobCount }} Jobs
             </p>
           </div>
@@ -43,20 +44,20 @@
       </div>
 
       <!-- Jobs List (Collapsible) -->
-      <div v-show="company.expanded" class="border-t border-green-200 bg-white">
+      <div v-show="company.expanded" class="border-t w-full h-full px-8 py-4 border-green-200 bg-white/50">
         <div
           v-for="job in company.jobs"
           :key="job.id"
-          class="flex items-center justify-between p-4 border-b border-gray-100 last:border-b-0"
+          class="flex w-full items-center justify-between p-4 border-b border-gray-100 last:border-b-0"
         >
           <div class="flex items-center gap-3">
             <!-- Job Icon -->
-            <div class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center">
-              <HardDrive class="w-4 h-4 text-gray-600" />
+            <div class="w-8 h-8 text-zinc-900 rounded flex items-center justify-center">
+              <Server />
             </div>
             <!-- Job Status -->
-            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-              <Check class="w-4 h-4 text-white" />
+            <div class="w-6 h-6 text-green-400 rounded-full flex items-center justify-center">
+              <CircleCheckBig />
             </div>
             <!-- Job Info -->
             <div>
@@ -76,11 +77,12 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ChevronDown, Check, HardDrive } from 'lucide-vue-next'
+import { ChevronDown, CircleCheckBig, Server } from 'lucide-vue-next'
 
 interface Job {
   id: string
